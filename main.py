@@ -48,6 +48,7 @@ def plot_region_info(labels):
         ax.plot(bx, by, '-b', linewidth=2.5)
 
     ax.axis((0, 2000, 1200, 0))
+    plt.show()
 
 
 def load_images_and_bg_labels(background_fname, names_fname, centers_fname, units_fname):
@@ -214,7 +215,7 @@ def generate_user_maps(player_vision, previously_seen_regions,
         player_image[previously_visible_region_mask] = previously_seen_image[previously_visible_region_mask]
 
         player_image[names_mask & (region_mask | previously_visible_region_mask)] = names_image[..., :3][names_mask & (region_mask | previously_visible_region_mask)]
-        player_image[centers_mask & region_mask] = centers_image[..., :3][centers_mask & region_mask]
+        player_image[centers_mask & (region_mask | previously_visible_region_mask)] = centers_image[..., :3][centers_mask & region_mask]
 
         units_visible_mask = np.isin(unit_labels, list(visible_units))
         player_image[units_mask & units_visible_mask] = units_image[..., :3][units_mask & units_visible_mask]
